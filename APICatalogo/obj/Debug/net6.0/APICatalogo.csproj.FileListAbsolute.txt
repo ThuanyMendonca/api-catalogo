@@ -47,6 +47,8 @@ C:\Users\thuan\OneDrive\Documentos\estudo\aulas\api-catalogo\APICatalogo\APICata
 C:\Users\thuan\OneDrive\Documentos\estudo\aulas\api-catalogo\APICatalogo\APICatalogo\obj\Debug\net6.0\APICatalogo.pdb
 C:\Users\thuan\OneDrive\Documentos\estudo\aulas\api-catalogo\APICatalogo\APICatalogo\obj\Debug\net6.0\APICatalogo.genruntimeconfig.cache
 C:\Users\thuan\OneDrive\Documentos\estudo\aulas\api-catalogo\APICatalogo\APICatalogo\obj\Debug\net6.0\ref\APICatalogo.dll
+C:\Users\thuan\OneDrive\Documentos\estudo\aulas\api-catalogo\APICatalogo\APICatalogo\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.Design.dll
+C:\Users\thuan\OneDrive\Documentos\estudo\aulas\api-catalogo\APICatalogo\APICatalogo\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.Design.dll
 C:\Users\thuan\OneDrive\Documentos\estudo\aulas\api-catalogo\APICatalogo\APICatalogo\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\thuan\OneDrive\Documentos\estudo\aulas\api-catalogo\APICatalogo\APICatalogo\bin\Debug\net6.0\Mono.TextTemplating.dll
 C:\Users\thuan\OneDrive\Documentos\estudo\aulas\api-catalogo\APICatalogo\APICatalogo\bin\Debug\net6.0\System.CodeDom.dll
