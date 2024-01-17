@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using APICatalogo.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -12,6 +13,7 @@ namespace APICatalogo.Models
 
         [Required]
         [StringLength(80)]
+        [PrimeiraLetraMaiuscula]
         public string? Nome { get; set; }
 
         [Required]
