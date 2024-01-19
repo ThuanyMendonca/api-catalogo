@@ -1,4 +1,5 @@
 using APICatalogo.Context;
+using APICatalogo.Extensions;
 using APICatalogo.Filters;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,6 +25,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// adiciona o middleware de tratamento de erros
+app.ConfigureExceptionHandler();
 
 app.UseHttpsRedirection();
 
