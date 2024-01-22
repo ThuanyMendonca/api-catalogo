@@ -1,6 +1,7 @@
 using APICatalogo.Context;
 using APICatalogo.Extensions;
 using APICatalogo.Filters;
+using APICatalogo.Repository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,9 +13,13 @@ builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializ
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 string? mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
+
 builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(mySqlConnection,ServerVersion.AutoDetect(mySqlConnection)));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddScoped<ApiLoggingFilter>();
 
 var app = builder.Build();

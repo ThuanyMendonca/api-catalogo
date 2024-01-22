@@ -1,6 +1,7 @@
 ﻿using APICatalogo.Context;
 using APICatalogo.Filters;
 using APICatalogo.Models;
+using APICatalogo.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,18 +11,24 @@ namespace APICatalogo.Controllers
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IUnitOfWork _uof;
 
-        public ProdutosController(AppDbContext context)
+        public ProdutosController(IUnitOfWork context)
         {
-            _context = context;
+            _uof = context;
+        }
+
+        [HttpGet("menorpreco")]
+        public ActionResult<IEnumerable<Produto>> GetProdutosPreco()
+        {
+            return _uof.ProdutoRepository.GetProdutosPorPreco().ToList();
         }
 
         [HttpGet]
         [ServiceFilter(typeof(ApiLoggingFilter))]
-        public async Task<ActionResult<IEnumerable<Produto>>> Get()
+        public ActionResult<IEnumerable<Produto>> Get()
         {
-            var produtos = await _context.Produtos.AsNoTracking().ToListAsync();
+            var produtos = _uof.ProdutoRepository.Get().ToList();
             if(produtos is null)
             {
                 return NotFound();
@@ -35,7 +42,7 @@ namespace APICatalogo.Controllers
         {
             //throw new Exception("Exception ao retornar produto pelo id");
             
-            var produto = _context.Produtos.FirstOrDefault(p => p.Id == id);
+            var produto = _uof.ProdutoRepository.GetById(p => p.Id == id);
             if (produto is null)
             {
                 return NotFound();
@@ -51,8 +58,8 @@ namespace APICatalogo.Controllers
             {
                 return BadRequest();
             }
-            _context.Produtos.Add(produto); // inclui apenas no contexto em memória
-            _context.SaveChanges(); // persiste os dados no banco de dados
+            _uof.ProdutoRepository.Add(produto); // inclui apenas no contexto em memória
+            _uof.Commit(); // persiste os dados no banco de dados
 
             /*
              * retorna 201 created
@@ -71,43 +78,30 @@ namespace APICatalogo.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(produto).State = EntityState.Modified;
-            _context.SaveChanges();
-
+            //_uof.Entry(produto).State = EntityState.Modified;
+            //_uof.SaveChanges();
+            _uof.ProdutoRepository.Update(produto);
+            _uof.Commit();
             return Ok(produto);
-        }
-
-        [HttpPatch("{id:int}")]
-        public ActionResult Patch(int id, Produto produto)
-        {
-            if (id != produto.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(produto).State = EntityState.Modified;
-            _context.SaveChanges();
-
-            return Ok(produto);
-        }
+        }       
 
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id) 
         {
-            Produto produto = _context.Produtos.FirstOrDefault(p => p.Id == id);
+            Produto produto = _uof.ProdutoRepository.GetById(p => p.Id == id);
             /* 
              * alternativa é o Find que busca primeiro na memória e caso não encontre, ele vai ao banco de dados
              * porém o parâmetro deve ser primary key
             */
-            //var produto = _context.Produtos.Find(id);
+            //var produto = _uof.Produtos.Find(id);
             
             if(produto is null)
             {
                 return NotFound("Produto não localizado");
             }
 
-            _context.Produtos.Remove(produto);
-            _context.SaveChanges();
+            _uof.ProdutoRepository.Delete(produto);
+            _uof.Commit();
 
             return Ok();
         }
