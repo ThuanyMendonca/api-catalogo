@@ -13,7 +13,7 @@ nupkg/
 
 # Visual Studio
 .vs/
-
+appsettings.json
 # Fleet
 .fleet/
 

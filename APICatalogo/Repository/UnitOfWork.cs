@@ -15,12 +15,12 @@ namespace APICatalogo.Repository
 
         public IProdutoRepository ProdutoRepository
         {
-            get { return _produtoRepo = _produtoRepo ?? new ProdutoRepository(_context); }
+            get { return _produtoRepo ??= new ProdutoRepository(_context); }
         }
 
         public ICategoriaRepository CategoriaRepository
         {
-            get { return _categoriaRepo = _categoriaRepo ?? new CategoriaRepository(_context); }
+            get { return _categoriaRepo ??= new CategoriaRepository(_context); }
         }       
 
         public async Task Commit()
